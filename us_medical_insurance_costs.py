@@ -18,7 +18,6 @@ class UsInsuranceData:
 		return 'Represents data on US medical insurance costs'
 	
 	def load_data(self, file_name):
-		# TODO: finish this!
 		with open(file_name, newline='') as csv_file:
         		reader = csv.DictReader(csv_file)
         		for row in reader:
