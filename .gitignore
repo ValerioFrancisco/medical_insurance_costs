@@ -1,3 +1,4 @@
 
 *.swp
 us_medical_insurance_costs.py~
+__pycache__/cmdmenu.cpython-39.pyc
