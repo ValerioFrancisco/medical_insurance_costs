@@ -31,19 +31,28 @@ class UsInsuranceData:
             			self.region.append(row['region'])
             			self.charges.append(float(row['charges']))
 
-	def get_average_age(self):
-		return sum(self.age) / len(self.age)
-
-	def get_average_bmi(self):
-		return sum(self.bmi) / len(self.bmi)
-
-	def get_average_charges(self):
-		return sum(self.charges) / len(self.charges)
 
 
-# Application
-
+# Loads data from CSV file
 data = UsInsuranceData('insurance.csv')
-app = cm.CmdMenu('US Medical Insurance Costs')
 
+# Functions
+def average(lst):
+	return sum(lst) / len(lst)
+
+def summary():
+	print('\n\tData Summary:')
+	print(f'There are {len(data.age)} records on the data.')
+	print(f'The average age is {round(average(data.age), 2)}.')
+	print(f'The average body mass index is {round(average(data.bmi), 2)}.')
+	print(f'The average insurance charges are ${round(average(data.charges), 2)}.')
+	print(f'There are {data.sex.count("male")} males and {data.sex.count("female")} females.')
+	print(f'From the data, {data.smoker.count("yes")} persons smoke.')
+	print(f'{data.children.count(0)} people have no children.')
+
+
+# Initializes menu
+app = cm.CmdMenu('US Medical Insurance Costs')
+app.add(summary, 'Data Summary')
+# run the application
 app.run()
