@@ -51,8 +51,30 @@ def summary():
 	print(f'{data.children.count(0)} people have no children.')
 
 
+def smoking_compare():
+	smoker_total = 0
+	non_smoker_total = 0
+	for idx, _ in enumerate(data.smoker):
+		if data.smoker[idx] == 'yes':
+			smoker_total += data.charges[idx]
+		else:
+			non_smoker_total += data.charges[idx]
+	avg_smoker = smoker_total / data.smoker.count('yes')
+	avg_non_smoker = non_smoker_total / data.smoker.count('no')
+	print(f'Smokers have in average ${round(avg_smoker, 2)} USD insurance charges.')
+	print(f'Non smokers have in average ${round(avg_non_smoker, 2)} USD insurance charges.')
+	# Shows a bar plot of this data.
+	data_lst = [avg_smoker, avg_non_smoker]
+	names = ['Smokers', 'Non smokers']
+	plt.bar(names, data_lst)
+	plt.title('Smoker Vs Non smoker comparision.')
+	plt.ylabel('Charges ($USD)')
+	plt.show()
+
+
 # Initializes menu
 app = cm.CmdMenu('US Medical Insurance Costs')
 app.add(summary, 'Data Summary')
+app.add(smoking_compare, 'Smoker VS Non Smoker')
 # run the application
 app.run()
