@@ -1,4 +1,3 @@
-import csv
 import pandas as pd
 import matplotlib.pyplot as plt
 import cmdmenu as cm
@@ -12,27 +11,21 @@ class UsInsuranceData:
 	
 	def __repr__(self):
 		return 'Represents data on US medical insurance costs'
+	
+	def summary(self):
+		print(f'There are {self.data_df.shape[0]} records in the file.')
+		mean = self.data_df['age'].mean()
+		print(f'The average age is {round(mean, 2)} years old.')
+		
 
 
 
 # Loads data from CSV file
 insurance = UsInsuranceData('insurance.csv')
 
-# Functions
-def average(lst):
-	return sum(lst) / len(lst)
-
-def summary():
-	print(insurance.data_df.head(5))
-
-
-def smoking_compare():
-	pass
-
 
 # Initializes menu
 app = cm.CmdMenu('US Medical Insurance Costs')
-app.add(summary, 'Data Summary')
-app.add(smoking_compare, 'Smoker VS Non Smoker')
+app.add(insurance.summary, 'Data Summary')
 # run the application
 app.run()
