@@ -14,10 +14,14 @@ class UsInsuranceData:
 	
 	def summary(self):
 		print(f'There are {self.data_df.shape[0]} records in the file.')
-		mean = self.data_df['age'].mean()
-		print(f'The average age is {round(mean, 2)} years old.')
-		
-
+		age_mean = self.data_df['age'].mean()
+		print(f'The average age is {round(age_mean, 2)} years old.')
+		bmi_mean = self.data_df['bmi'].mean()
+		print(f'The average bmi is {round(bmi_mean, 2)}')
+		charges_mean = self.data_df['charges'].mean()
+		print(f'The average insurance charges are US${round(charges_mean, 2)}')
+		# TODO: must check this out
+		# refresh pandas knowlege
 
 
 # Loads data from CSV file
