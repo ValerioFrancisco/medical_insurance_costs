@@ -1,7 +1,7 @@
 import pandas as pd
-from collections import Counter
 import matplotlib.pyplot as plt
-import cmdmenu as cm
+from collections import Counter
+from cmdmenu import CmdMenu
 
 # This class is responsible to handle the data load and analisys
 
@@ -35,7 +35,7 @@ insurance = UsInsuranceData('insurance.csv')
 
 
 # Initializes menu
-app = cm.CmdMenu('US Medical Insurance Costs')
+app = CmdMenu('US Medical Insurance Costs')
 app.add(insurance.summary, 'Data Summary')
 # run the application
 app.run()
