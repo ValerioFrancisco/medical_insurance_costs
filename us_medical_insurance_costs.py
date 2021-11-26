@@ -35,10 +35,12 @@ class UsInsuranceData:
 	
 	def smoker_comparision(self):
 		# Plots a bar graph comparing the insurance charges of smokers vs non smokers
+		# Prints raw data tpo terminal
 		smoker_mean = self.df.loc[self.df['smoker'] == 'yes']['charges'].mean()
 		print(f'Average smoker charges: {smoker_mean:.2f}')
 		non_smoker_mean = self.df.loc[self.df['smoker'] == 'no']['charges'].mean()
 		print(f'Average non smoker charges: {non_smoker_mean:.2f}')
+		# Plots bar graph
 		plt.figure('Smoker comparision')
 		plt.bar(['Smokers', 'Non smokers'], [smoker_mean, non_smoker_mean])
 		plt.title('Smoker Vs Non smoker charges')
@@ -46,16 +48,17 @@ class UsInsuranceData:
 		plt.show()
 	
 	def bmi_comparision(self):
-		print(self.df['bmi'].max())
-		print(self.df['bmi'].min())
+		# Shows a pie chart of the number of individuals by BMI category
 		underweight = self.df.loc[self.df['bmi'] < 18.5]['bmi'].count()
 		healthy = self.df.loc[(self.df['bmi'] >= 18.5) & (self.df['bmi'] < 25.0)]['bmi'].count()
 		overweight = self.df.loc[(self.df['bmi'] >= 25.0) & (self.df['bmi'] < 30.0)]['bmi'].count()
 		obese = self.df.loc[self.df['bmi'] >= 30]['bmi'].count()
+		# Prints these to the terminal
 		print(f'Underweight: {underweight} individuals')
 		print(f'Healthy: {healthy} individuals')
 		print(f'Overweight: {overweight} individuals')
 		print(f'Obese: {obese} individuals')
+		# Plots data
 		plt.figure('BMI Categories')
 		plt.title('Individuals per BMI category')
 		plt.pie([underweight, healthy, overweight, obese], labels = ['Underweight', \
