@@ -44,6 +44,24 @@ class UsInsuranceData:
 		plt.title('Smoker Vs Non smoker charges')
 		plt.ylabel('Average insurance charges')
 		plt.show()
+	
+	def bmi_comparision(self):
+		print(self.df['bmi'].max())
+		print(self.df['bmi'].min())
+		underweight = self.df.loc[self.df['bmi'] < 18.5]['bmi'].count()
+		healthy = self.df.loc[(self.df['bmi'] >= 18.5) & (self.df['bmi'] < 25.0)]['bmi'].count()
+		overweight = self.df.loc[(self.df['bmi'] >= 25.0) & (self.df['bmi'] < 30.0)]['bmi'].count()
+		obese = self.df.loc[self.df['bmi'] >= 30]['bmi'].count()
+		print(f'Underweight: {underweight} individuals')
+		print(f'Healthy: {healthy} individuals')
+		print(f'Overweight: {overweight} individuals')
+		print(f'Obese: {obese} individuals')
+		plt.figure('BMI Categories')
+		plt.title('Individuals per BMI category')
+		plt.pie([underweight, healthy, overweight, obese], labels = ['Underweight', \
+			'Healthy', 'Overweight', 'Obese'])
+		plt.show()
+		
 
 # Loads data from CSV file
 insurance = UsInsuranceData('insurance.csv')
@@ -53,5 +71,6 @@ insurance = UsInsuranceData('insurance.csv')
 app = CmdMenu('US Medical Insurance Costs')
 app.add(insurance.summary, 'Data Summary')
 app.add(insurance.smoker_comparision, 'Smoker insurance charges')
+app.add(insurance.bmi_comparision, 'People by BMI')
 # run the application
 app.run()
