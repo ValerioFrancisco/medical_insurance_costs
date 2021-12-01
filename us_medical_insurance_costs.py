@@ -71,7 +71,7 @@ class UsInsuranceData:
 		healthy = self.df.loc[(self.df['bmi'] >= 18.5) & (self.df['bmi'] < 25.0)]['charges'].mean()
 		overweight = self.df.loc[(self.df['bmi'] >= 25.0) & (self.df['bmi'] < 30.0)]['charges'].mean()
 		obese = self.df.loc[self.df['bmi'] >= 30]['charges'].mean()
-		# Prints to the console
+		# Prints to the terminal
 		print(f'Underweight mean charges: US${underweight:.2f}')
 		print(f'Heathy mean charges: US${healthy:.2f}')
 		print(f'overweight mean charges: US${overweight:.2f}')
@@ -83,6 +83,15 @@ class UsInsuranceData:
 			 healthy, overweight, obese], color = ['blue', 'green', 'orange', 'red'])
 		plt.show()
 
+	def age_comparision(self):
+		# Plots the charges by age
+		ages = self.df.groupby('age').charges.mean().reset_index()
+		plt.figure('Charges by age')
+		plt.title('Insurance charges per age in the US')
+		plt.xlabel('age')
+		plt.ylabel('Charges in US$')
+		plt.plot(ages.age, ages.charges)
+		plt.show()
 # Loads data from CSV file
 insurance = UsInsuranceData('insurance.csv')
 
@@ -93,5 +102,6 @@ app.add(insurance.summary, 'Data Summary')
 app.add(insurance.smoker_comparision, 'Smoker insurance charges')
 app.add(insurance.bmi_per_individual, 'Individuals per BMI category')
 app.add(insurance.bmi_charges_comparision, 'Insurance charges and bmi correlation')
+app.add(insurance.age_comparision, 'Age charge plot')
 # run the application
 app.run()
