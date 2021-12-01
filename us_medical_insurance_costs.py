@@ -42,12 +42,12 @@ class UsInsuranceData:
 		print(f'Average non smoker charges: {non_smoker_mean:.2f}')
 		# Plots bar graph
 		plt.figure('Smoker comparision')
-		plt.bar(['Smokers', 'Non smokers'], [smoker_mean, non_smoker_mean])
+		plt.bar(['Smokers', 'Non smokers'], [smoker_mean, non_smoker_mean], color = ['red', 'green'])
 		plt.title('Smoker Vs Non smoker charges')
 		plt.ylabel('Average insurance charges')
 		plt.show()
 	
-	def bmi_comparision(self):
+	def bmi_per_individual(self):
 		# Shows a pie chart of the number of individuals by BMI category
 		underweight = self.df.loc[self.df['bmi'] < 18.5]['bmi'].count()
 		healthy = self.df.loc[(self.df['bmi'] >= 18.5) & (self.df['bmi'] < 25.0)]['bmi'].count()
@@ -64,7 +64,24 @@ class UsInsuranceData:
 		plt.pie([underweight, healthy, overweight, obese], labels = ['Underweight', \
 			'Healthy', 'Overweight', 'Obese'])
 		plt.show()
-		
+
+	def bmi_charges_comparision(self):
+		# Plots the charges associated with the bmi categories
+		underweight = self.df.loc[self.df['bmi'] < 18.5]['charges'].mean()
+		healthy = self.df.loc[(self.df['bmi'] >= 18.5) & (self.df['bmi'] < 25.0)]['charges'].mean()
+		overweight = self.df.loc[(self.df['bmi'] >= 25.0) & (self.df['bmi'] < 30.0)]['charges'].mean()
+		obese = self.df.loc[self.df['bmi'] >= 30]['charges'].mean()
+		# Prints to the console
+		print(f'Underweight mean charges: US${underweight:.2f}')
+		print(f'Heathy mean charges: US${healthy:.2f}')
+		print(f'overweight mean charges: US${overweight:.2f}')
+		print(f'Obese mean charges: US${obese:.2f}')
+		# Plots data
+		plt.figure('BMI insurance charges correlation')
+		plt.title('BMI mean charges per category')
+		plt.bar(['Underweight', 'Healthy', 'Overweight', 'Obese'], [underweight,\
+			 healthy, overweight, obese], color = ['blue', 'green', 'orange', 'red'])
+		plt.show()
 
 # Loads data from CSV file
 insurance = UsInsuranceData('insurance.csv')
@@ -74,6 +91,7 @@ insurance = UsInsuranceData('insurance.csv')
 app = CmdMenu('US Medical Insurance Costs')
 app.add(insurance.summary, 'Data Summary')
 app.add(insurance.smoker_comparision, 'Smoker insurance charges')
-app.add(insurance.bmi_comparision, 'People by BMI')
+app.add(insurance.bmi_per_individual, 'Individuals per BMI category')
+app.add(insurance.bmi_charges_comparision, 'Insurance charges and bmi correlation')
 # run the application
 app.run()
