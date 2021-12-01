@@ -32,7 +32,6 @@ class UsInsuranceData:
 		smoker_count = Counter(self.df['smoker'])['yes']
 		print(f'{smoker_count} persons in the data are smokers')
 
-	
 	def smoker_comparision(self):
 		# Plots a bar graph comparing the insurance charges of smokers vs non smokers
 		# Prints raw data tpo terminal
@@ -92,6 +91,16 @@ class UsInsuranceData:
 		plt.ylabel('Charges in US$')
 		plt.plot(ages.age, ages.charges)
 		plt.show()
+
+	def region_comparision(self):
+		# shows a bar plot with a comparision between average charges and region
+		regions = self.df.groupby('region').charges.mean().reset_index()
+		plt.figure('Regions')
+		plt.title('Average charges per region')
+		plt.bar(regions.region, regions.charges)
+		plt.show(block = True)
+
+
 # Loads data from CSV file
 insurance = UsInsuranceData('insurance.csv')
 
@@ -103,5 +112,6 @@ app.add(insurance.smoker_comparision, 'Smoker insurance charges')
 app.add(insurance.bmi_per_individual, 'Individuals per BMI category')
 app.add(insurance.bmi_charges_comparision, 'Insurance charges and bmi correlation')
 app.add(insurance.age_comparision, 'Age charge plot')
+app.add(insurance.region_comparision, 'Region Comparision...')
 # run the application
 app.run()
