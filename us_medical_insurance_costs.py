@@ -12,7 +12,7 @@ class UsInsuranceData:
 	
 	def __repr__(self):
 		return 'Represents data on US medical insurance costs'
-	
+
 	def summary(self):
 		# Prints a summary of the data
 		print('\n\t*** Data Summary ***')
@@ -31,6 +31,11 @@ class UsInsuranceData:
 			print(f'{children_counter[key]} persons have {key} children')
 		smoker_count = Counter(self.df['smoker'])['yes']
 		print(f'{smoker_count} persons in the data are smokers')
+
+	def age_distribution(self):
+		fig, ax = plt.subplots(figsize=(6, 4))
+		ax = plt.hist(self.df.age, bins=20)
+		plt.show()
 
 	def smoker_comparision(self):
 		# Plots a bar graph comparing the insurance charges of smokers vs non smokers
@@ -100,18 +105,22 @@ class UsInsuranceData:
 		plt.bar(regions.region, regions.charges)
 		plt.show(block = True)
 
+def main():
+	# Loads data from CSV file
+	insurance = UsInsuranceData('insurance.csv')
 
-# Loads data from CSV file
-insurance = UsInsuranceData('insurance.csv')
 
+	# Initializes menu
+	app = CmdMenu('US Medical Insurance Costs')
+	app.add(insurance.summary, 'Data Summary')
+	app.add(insurance.age_distribution, 'Age distribution')
+	app.add(insurance.smoker_comparision, 'Smoker insurance charges')
+	app.add(insurance.bmi_per_individual, 'Individuals per BMI category')
+	app.add(insurance.bmi_charges_comparision, 'Insurance charges and bmi correlation')
+	app.add(insurance.age_comparision, 'Age charge plot')
+	app.add(insurance.region_comparision, 'Region Comparision...')
+	# run the application
+	app.run()
 
-# Initializes menu
-app = CmdMenu('US Medical Insurance Costs')
-app.add(insurance.summary, 'Data Summary')
-app.add(insurance.smoker_comparision, 'Smoker insurance charges')
-app.add(insurance.bmi_per_individual, 'Individuals per BMI category')
-app.add(insurance.bmi_charges_comparision, 'Insurance charges and bmi correlation')
-app.add(insurance.age_comparision, 'Age charge plot')
-app.add(insurance.region_comparision, 'Region Comparision...')
-# run the application
-app.run()
+if __name__ == '__main__':
+	main()
